@@ -1,0 +1,6 @@
+1) spin_lock compare with mutex cost time
+2) critical section cost less time: spin_lock have a better performance
+than mutex, but spin_lock only can be used in preemptive multi-cpu
+environment,when critical section cost more time, mutex is better,so
+choose mutex in most occasion
+
