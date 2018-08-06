@@ -18,21 +18,30 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 sem_t sem_rw;
 char *path = "./test.txt";
 
-void wfile(void* arg){
+void rdfile(void* arg){
 	int fd;
-	char buf[] = " writing...";
-	strcat(buf,arg);
-	fd = open(path,O_RDWR|O_CREAT,0777);
-	//write(fd,c,1);
+	char buf[] = "reading...\n";
+	//strcat(buf,(char*)arg);
+	fd = open(path,O_RDWR|O_APPEND|O_CREAT,0777);
+	write(fd,arg,1);
+    write(fd,buf,sizeof(buf));
+	close(fd);
+}
+void wtfile(void* arg){
+	int fd;
+	char buf[] = "writing...\n";
+	//strcat(buf,(char*)arg);
+	fd = open(path,O_RDWR|O_APPEND|O_CREAT,0777);
+    write(fd,arg,1);
 	write(fd,buf,sizeof(buf));
 	close(fd);
 }
 void* writer(void* arg){
 	sem_wait(&sem_rw);
-	printf("Writer %s start writing\n",arg);
-	wfile(arg);
+	printf("Writer %s start writing\n",(char*)arg);
+	wtfile(arg);
 	sleep(1);
-	printf("Writer %s finish writing\n",arg);
+	printf("Writer %s finish writing\n",(char*)arg);
 	sem_post(&sem_rw);
 }
 void* reader(void* arg){
@@ -42,9 +51,10 @@ void* reader(void* arg){
 	}
 	count++;
 	pthread_mutex_unlock(&mutex);
-	printf("Reader %s start reading\n",arg);
+	printf("Reader %s start reading\n",(char*)arg);
+    rdfile(arg);
 	sleep(1);
-	printf("Reader %s finish reading\n",arg);
+	printf("Reader %s finish reading\n",(char*)arg);
 	pthread_mutex_lock(&mutex);
 	count--;
 	if (count == 0){
@@ -71,6 +81,8 @@ int main(){
 
 	pthread_mutex_destroy(&mutex);
 	sem_destroy(&sem_rw);
+
+    system("cat ./test.txt");
     return 0;
 
 }
