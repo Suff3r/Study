@@ -27,7 +27,7 @@ static void *producer(void *arg) {
     //pthread_cleanup_push(cleanup_handler,p);
 	while(1){
 		pthread_mutex_lock(&mtx);
-		if (num <= 0){
+		while (num <= 0){
 			for(;num < 4; num++){
 				sleep(1);
 				printf("Producer works,num = %d\n",num);
@@ -46,7 +46,7 @@ static void *consumer(void *arg){
 		int randtime = 0;
 		randtime = rand()%2 + 1;
 		pthread_mutex_lock(&mtx);
-		if (num <= 0){
+		while (num <= 0){
 			pthread_cond_wait(&cond,&mtx);//unlock mutex auto
 		}
 		num--;
@@ -61,7 +61,7 @@ static void *consumer2(void *arg){
 		int randtime = 0;
 		randtime = rand()%2 + 1;
 		pthread_mutex_lock(&mtx);
-		if (num <= 0){
+		while (num <= 0){
 			pthread_cond_wait(&cond,&mtx);//unlock mutex auto
 		}
 		num--;

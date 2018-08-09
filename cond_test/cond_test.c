@@ -23,8 +23,8 @@ void *producer(void *arg){
         pthread_mutex_lock(&lock);
         mp->next = head;
         head = mp;
-        pthread_mutex_unlock(&lock);
         pthread_cond_signal(&has_product);
+        pthread_mutex_unlock(&lock);
         sleep(2);
     }
 }

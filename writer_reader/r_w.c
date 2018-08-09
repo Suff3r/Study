@@ -24,7 +24,7 @@ void rdfile(void* arg){
 	//strcat(buf,(char*)arg);
 	fd = open(path,O_RDWR|O_APPEND|O_CREAT,0777);
 	write(fd,arg,1);
-    write(fd,buf,sizeof(buf));
+    write(fd,buf,sizeof(buf)-1);
 	close(fd);
 }
 void wtfile(void* arg){
@@ -33,7 +33,7 @@ void wtfile(void* arg){
 	//strcat(buf,(char*)arg);
 	fd = open(path,O_RDWR|O_APPEND|O_CREAT,0777);
     write(fd,arg,1);
-	write(fd,buf,sizeof(buf));
+	write(fd,buf,sizeof(buf)-1);
 	close(fd);
 }
 void* writer(void* arg){
