@@ -1,0 +1,82 @@
+1 SELECT
+
+ SELECT 列名称 FROM 表名称
+ SELECT *  FROM 表名称
+1.1 SELECT DISTINCT 语句:筛选出列中唯一不同的值（不含重复项）
+ SELECT DISTINCT 列名称 FROM 表名称
+1.2 WHERE 子句用于规定选择的标准（表条件）
+ SELECT 列名称 FROM 表名称 WHERE 列 运算符 值
+操作符           描述
+=                等于
+<>               不等于
+>=               大于等于
+<=               小于等于
+表示值的时候，如果是文本值，需要用单引号环绕文本值，如果是数值，则不用引号
+1.3 AND/OR WHERE 子句复杂条件可用AND或者OR连接而成
+ SELECT 列名称 FROM 表名称 WHERE 列 运算符 值 AND/OR 列 运算符 值
+AND 和 OR还可以同时使用
+1.4 IN     WHERE 子句中规定多个值
+ SELECT 列名称 FROM 表名称 WHERE 列 IN (value1,value2,...)
+1.5 （NOT）LIKE   WHERE 子句依据一个套式pattern找需要的数据
+ SELECT 列名称 FROM 表名称 WHERE 列 LIKE pattern
+ pattern例如'N%' '%N' '%N%' 'A_N'
+
+2.1 ORDER BY 子句用于对结果集进行排序
+ ORDER BY 语句默认按照牲畜对记录进行排序，使用DESC关键字可以进行降序排序
+ eg：SELECT Company, OrderNumber FROM Orders ORDER BY Company 或者
+ eg: SELECT Company, OrderNumber FROM Orders ORDER BY Company,OrderNumber
+这样以字母顺序排列Company，同时数字顺序排列OrderNumber
+
+2.2 函数 （AVG平均 COUNT计数 MAX最大值 MIN最小值 SUM求和）
+ SELECT 函数名（列名称）FROM 表名称
+2.2.1 count函数 计数常常和distinct结合起来用，目的是找出表格中有多少笔不同的资料
+ eg：SELECT COUNT(DISTINCT 列名称) FROM 表名称
+
+3.1 INSERT INTO 语句用于向表格中插入新的行
+ INSERT INTO 表名称 (列1，列2，...)VALUES (值1，值2，值3...)
+
+4.1 UPDATE 语句用来修改表中的数据
+ UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
+ eg：UPDATE Person SET FirstName = 'Fred' WHERE LastName = 'Wilson' 
+
+5.1 DELETE 语句 用于删除表中的行
+ DELETE FROM 表名称 WHERE 列名称 = 值
+ DELETE * FROM 表名称意味着删除表中的所有行，但不删除表的结构、属性和索引
+
+6.1 SQL Alias语法，可以为列名称或表名称指定别名
+ 对于表的语言
+ SELECT column_name(s) FROM table_name AS alias_name
+ eg:SELECT po.OrderID, p.LastName, p.FirstName
+    FROM Persons AS p, Product_Orders AS po
+    WHERE p.LastName='Adams' AND p.FirstName='John'
+
+7.1 JOIN 用于根据两个或多个表汇总的列之间的关系，从这些表中查询数据
+ eg:SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo
+    FROM Persons, Orders
+    WHERE Persons.Id_P = Orders.Id_P 或者
+ eg:SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo
+    FROM Persons
+    INNER JOIN Orders
+    ON Persons.Id_P = Orders.Id_P
+    ORDER BY Persons.LastName
+7.1.1 LEFT JOIN关键字会从左表那里返回所有的行，即使右表中没有匹配的行
+7.1.2 RIGHT JOIN关键字会从右表那里返回所有的行，即使左表中没有匹配的行
+7.1.3 FULL JOIN 只要其中某个表中存在匹配，FULL关键字就会返回行
+
+8.1 UNION 语法 和 UNION ALL语法
+ eg：SELECT column_name(s) FROM table_name1
+     UNION
+     SELECT column_name(s) FROM table_name2
+     UNION 操作符选取不同的值，如果允许重复的值，使用UNION ALL
+9.1 SELECT INTO语法：把一个表（或表的行）插入到另一个表中
+ eg：从 "Persons" 表中提取居住在 "Beijing" 的人的信息，创建了一个带有两个列的名为 "Persons_backup" 的表：
+     SELECT LastName,Firstname
+     INTO Persons_backup
+     FROM Persons
+     WHERE City='Beijing'
+ eg：创建一个名为 "Persons_Order_Backup" 的新表，其中包含了从 Persons 和 Orders 两个表中取得的信息：
+     SELECT Persons.LastName,Orders.OrderNo
+     INTO Persons_Order_Backup
+     FROM Persons
+     INNER JOIN Orders
+     ON Persons.Id_P=Orders.Id_P

@@ -1,0 +1,68 @@
+1.1 CREATE DATABASE 语句用于创建数据库
+ CREATE DATABASE database_name
+2.1 CREATE TABLE 语句用于创建数据库中的表
+
+ CREATE TABLE 表名称
+ (
+ 列名称1 数据类型,
+ 列名称2 数据类型,
+ 列名称3 数据类型,
+ ....
+ )
+数据类型：
+integer(size)
+int(size)
+smallint(size)
+tinyint(size)
+仅容纳整数。在括号内规定数字的最大位数。
+
+decimal(size,d)
+numeric(size,d)
+容纳带有小数的数字。
+"size" 规定数字的最大位数。"d" 规定小数点右侧的最大位数。
+
+char(size)  
+容纳固定长度的字符串（可容纳字母、数字以及特殊字符）。
+在括号中规定字符串的长度。
+
+varchar(size)   
+容纳可变长度的字符串（可容纳字母、数字以及特殊的字符）。
+在括号中规定字符串的最大长度。
+
+date(yyyymmdd)  容纳日期。
+eg：
+CREATE TABLE Persons
+(
+Id_P int NOT NULL,
+LastName varchar(255),
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255)
+)
+可为表中某些列添加约束
+1.NOT NULL 不接受NULL值
+2.UNIQUE 约束唯一标识数据库表中的每条记录
+3.PRIMARY KEY拥有自动定义的UNIQUE约束（每个表可以有多个UNIQUE约束，但只能有一个PRIMARY KEY约束）
+4.FOREIGN KEY可以在一个表中定义外键指向另一个表中的PRIMARY KEY
+5.CHECK 约束用于限制列中的值的范围
+6.DEFAULT 用于添加默认值到所有的新纪录
+
+3.1 CREATE INDEX用于在表中创建索引，索引使数据库程序可以更快地查找数据
+ CREATE INDEX index_name
+ ON table_name (column_name)
+
+4.1 DROP语句 撤销索引、表以及数据库
+ DROP TABLE 表名称 删除表（表的结构、属性、索引都会被删除）
+ TRUNCATE TABLE 表名称 只是删除表内的数据，并不删除表本身
+ DROP DATABASE 数据库名称
+
+5.1 ALTER TABLE 语句用于在已有的表中添加、修改、删除列。
+ ALTER TABLE table_name 添加列
+ ADD column_name datatype
+ 
+ ALTER TABLE table_name 删除表中的列
+ DROP COLUMN column_name
+ 
+ ALTER TABLE table_name 修改表中的列
+ ALTER COLUMN column_name datatype
+
