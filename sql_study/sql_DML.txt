@@ -19,7 +19,10 @@ AND 和 OR还可以同时使用
  SELECT 列名称 FROM 表名称 WHERE 列 IN (value1,value2,...)
 1.5 （NOT）LIKE   WHERE 子句依据一个套式pattern找需要的数据
  SELECT 列名称 FROM 表名称 WHERE 列 LIKE pattern
- pattern例如'N%' '%N' '%N%' 'A_N'
+/****************/
+pattern例如'N%' '%N' '%N%' 'A_N' '[AN]M'
+%代表一个或多个 _代表一个符号 [AN]代表括号内的任意一个字符
+/****************/
 
 2.1 ORDER BY 子句用于对结果集进行排序
  ORDER BY 语句默认按照牲畜对记录进行排序，使用DESC关键字可以进行降序排序
